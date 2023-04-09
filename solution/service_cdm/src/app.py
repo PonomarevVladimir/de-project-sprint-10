@@ -5,7 +5,7 @@ from flask import Flask
 
 from app_config import AppConfig
 from cdm_loader.cdm_message_processor_job import CdmMessageProcessor
-
+from cdm_loader.repository.cdm_repository import CdmRepository
 
 app = Flask(__name__)
 
@@ -20,7 +20,13 @@ def hello_world():
 if __name__ == '__main__':
     app.logger.setLevel(logging.DEBUG)
 
+    config = AppConfig()
+    rep = CdmRepository(config.pg_warehouse_db())
+
     proc = CdmMessageProcessor(
+        config.kafka_consumer(),
+        config.kafka_producer(),
+        rep,
         app.logger
     )
 
@@ -29,3 +35,4 @@ if __name__ == '__main__':
     scheduler.start()
 
     app.run(debug=True, host='0.0.0.0', use_reloader=False)
+
