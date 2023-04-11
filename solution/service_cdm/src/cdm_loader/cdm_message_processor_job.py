@@ -26,11 +26,11 @@ class CdmMessageProcessor:
             user_id = cons["user_id"]
             product_id = cons["product_id"]
             category = cons["category"]
-            self._logger.info(f"{datetime.utcnow()}: OKKK1")
+            self._logger.info(f"DEBUGGING LOG {datetime.utcnow()}: consume success")
             self._cdm_repository.user_product_counters_insert(user_id, product_id)
-            self._logger.info(f"{datetime.utcnow()}: OKKK2")
+            self._logger.info(f"DEBUGGING LOG {datetime.utcnow()}: user_product updated")
             self._cdm_repository.user_category_counters_insert(user_id, category)
-            self._logger.info(f"{datetime.utcnow()}: OKKK3")
+            self._logger.info(f"DEBUGGING LOG {datetime.utcnow()}: user_category updated")
 
             i = i+1
             cons = self._consumer.consume()
